@@ -33,7 +33,7 @@ Click the button below to add a new entry.`,noEntriesReadonlyText:`No entries`,t
         <p id="dfcr-recall-timer" class="dfcr-recall-timer"></p>
         ${t.prompt}
         <input type="text" id="dfcr-recall-input" autocomplete="off" autofocus />
-        <ol id="dfcr-recall-list"></ol>
+        <ul id="dfcr-recall-list"></ul>
       </div>
     `;let s=e.querySelector(`#dfcr-recall-input`),c=e.querySelector(`#dfcr-recall-list`);if(s.focus(),t.max_duration_ms!==null){let n=e.querySelector(`#dfcr-recall-timer`),r=Math.round(t.max_duration_ms/1e3),i=()=>{n.textContent=`Time left to recall: ${Math.max(r,0)} seconds.`,n.classList.toggle(`dfcr-recall-timer--warning`,r<=10)};i(),o=setInterval(()=>{--r,i(),r<=0&&clearInterval(o)},1e3)}let l=()=>{a!==null&&clearTimeout(a),o!==null&&clearInterval(o),s.removeEventListener(`keydown`,d),this.jsPsych.finishTrial({responses:r})},u=()=>{let e=s.value.trim();if(e.length===0)return;let t=performance.now();r.push({response:e,output_position:r.length+1,rt_ms:Math.round(t-n),rt_since_prev_ms:Math.round(t-i)}),i=t;let a=document.createElement(`li`);a.textContent=e,c.appendChild(a),s.value=``},d=e=>{e.key===`Enter`&&(e.preventDefault(),u())};s.addEventListener(`keydown`,d),t.max_duration_ms!==null&&(a=setTimeout(l,t.max_duration_ms))}},Nm=class{static info={name:`distractor-math`,version:`1.0.0`,parameters:{problems:{type:v.COMPLEX,default:[]},max_duration_ms:{type:v.INT,default:3e4},prompt:{type:v.HTML_STRING,default:``}},data:{responses:{type:v.COMPLEX}}};constructor(e){this.jsPsych=e}trial(e,t){let n=performance.now(),r=t.problems.map(e=>({problem:`${e.a} ${e.op} ${e.b}`,correct_answer:e.answer,response:null,rt_ms:null}));e.innerHTML=`
       <div class="dfcr-distractor">
